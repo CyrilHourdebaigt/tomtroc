@@ -1,0 +1,7 @@
+# Dossiers de configuration d'éditeurs
+.vscode/
+.idea/
+
+# Fichiers temporaires ou de log
+*.log
+*.bak
