@@ -4,6 +4,10 @@
   <div class="auth-content">
     <div class="auth-left">
       <h2>Inscription</h2>
+      <?php if (isset($_GET['error']) && $_GET['error'] == 1): ?>
+          <p class="error-register"><?php echo htmlspecialchars("Cet email est déjà utilisé."); ?></p>
+      <?php endif; ?>
+
       <form method="POST" action="index.php?route=doRegister">
         <label for="username">Pseudo</label>
         <input type="text" name="username" id="username" placeholder="Pseudo" required>

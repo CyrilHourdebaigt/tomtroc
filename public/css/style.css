@@ -536,6 +536,11 @@ h1, h2, h3 {
     flex-direction: row;
     width: 100%;
   }
+
+  .error-login, .error-register {
+    margin-left: 250px;
+    color: red
+  }
   
   .auth-left, .auth-right {
     flex: 1;

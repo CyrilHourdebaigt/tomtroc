@@ -1,5 +1,5 @@
 <?php
-session_start(); // Pour pouvoir utiliser les sessions
+session_start();
 
 require_once __DIR__ . '/../models/User.php';
 
@@ -28,7 +28,8 @@ class AuthController {
             $existingUser = $this->userModel->findByEmail($email);
 
             if ($existingUser) {
-                echo "Email déjà utilisé.";
+                header('Location: index.php?route=register&error=1');
+                exit;
             } else {
                 $this->userModel->create($username, $email, $password);
                 header('Location: index.php?route=login');
@@ -63,7 +64,8 @@ class AuthController {
                 header('Location: index.php');
                 exit;
             } else {
-                echo "Email ou mot de passe incorrect.";
+                header('Location: index.php?route=login&error=1');
+                exit;
             }
         } else {
             // Affiche le formulaire si GET

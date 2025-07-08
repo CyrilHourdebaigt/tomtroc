@@ -5,6 +5,10 @@
       
       <div class="auth-left">
         <h2>Connexion</h2>
+        <?php if (isset($_GET['error']) && $_GET['error'] == 1): ?>
+            <p class="error-login"><?php echo htmlspecialchars("Email ou mot de passe incorrect."); ?></p>
+        <?php endif; ?>
+
         <form method="POST" action="index.php?route=doLogin">
           <label for="email">Adresse email</label>
           <input type="email" name="email" id="email" placeholder="Adresse email" required>
