@@ -49,6 +49,11 @@ header {
     gap: 20px;
 }
 
+.icon-compte {
+    vertical-align: middle;
+    width:15px;
+}
+
 .message-badge {
   display: inline-block;
   background-color: black;

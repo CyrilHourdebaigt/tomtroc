@@ -42,7 +42,7 @@ if (isset($_SESSION['user_id'])) {
 
                 <li>
                     <a href="index.php?route=account">
-                        <img src="/tomtroc/public/assets/images/icons/Icon-compte.svg" alt="Compte" width="15" style="vertical-align: middle; margin-right: 5px;">
+                        <img src="/tomtroc/public/assets/images/icons/Icon-compte.svg" alt="Compte" class="icon-compte">
                         Mon compte
                     </a>
                 </li>
