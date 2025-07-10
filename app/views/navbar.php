@@ -21,48 +21,44 @@ if (isset($_SESSION['user_id'])) {
             <span></span>
         </div>
 
-        <ul class="nav-links" id="nav-links">
+        <div class="nav-links" id="nav-links">
             <div class="nav-left">
-                <li><a href="index.php">Accueil</a></li>
-                <li><a href="index.php?route=books">Nos livres à l’échange</a></li>
+                <a href="index.php">Accueil</a>
+                <a href="index.php?route=books">Nos livres à l’échange</a>
             </div>
             <div class="nav-right">
-                <li>
-                    <a href="index.php?route=messages" style="<?= $unreadCount > 0 ? 'nav-link-bold' : '' ?>">
-                        <img src="/tomtroc/public/assets/images/icons/Icon-messagerie.svg" 
-                        alt="Messages" 
+                <a href="index.php?route=messages" style="<?= $unreadCount > 0 ? 'nav-link-bold' : '' ?>">
+                    <img src="/tomtroc/public/assets/images/icons/Icon-messagerie.svg"
+                        alt="Messages"
                         width="15"
                         class="icon-message">
-                        Messagerie
-                        <?php if ($unreadCount > 0): ?>
+                    Messagerie
+                    <?php if ($unreadCount > 0): ?>
                         <span class="message-badge"><?= $unreadCount ?></span>
-                        <?php endif; ?>
-                    </a>
-                </li>
+                    <?php endif; ?>
+                </a>
 
-                <li>
-                    <a href="index.php?route=account">
-                        <img src="/tomtroc/public/assets/images/icons/Icon-compte.svg" alt="Compte" class="icon-compte">
-                        Mon compte
-                    </a>
-                </li>
+                <a href="index.php?route=account">
+                    <img src="/tomtroc/public/assets/images/icons/Icon-compte.svg" alt="Compte" class="icon-compte">
+                    Mon compte
+                </a>
 
                 <?php if (isset($_SESSION['username'])): ?>
-                    <li><a href="index.php?route=logout">Déconnexion</a></li>
+                    <a href="index.php?route=logout">Déconnexion</a>
                 <?php else: ?>
-                    <li><a href="index.php?route=login">Connexion</a></li>
+                    <a href="index.php?route=login">Connexion</a>
                 <?php endif; ?>
             </div>
-        </ul>
+        </div>
 
     </nav>
 </header>
 
 <script>
-        const burger = document.getElementById("burger-menu");
-        const navLinks = document.querySelector(".nav-links");
+    const burger = document.getElementById("burger-menu");
+    const navLinks = document.querySelector(".nav-links");
 
-        burger.addEventListener("click", () => {
-            navLinks.classList.toggle("active");
-        });
- </script>
+    burger.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+    });
+</script>

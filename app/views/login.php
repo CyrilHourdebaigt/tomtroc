@@ -1,32 +1,32 @@
 <?php include __DIR__ . '/header.php'; ?>
 
-  <div class="auth-page">
-    <div class="auth-content">
-      
-      <div class="auth-left">
-        <h2>Connexion</h2>
-        <?php if (isset($_GET['error']) && $_GET['error'] == 1): ?>
-            <p class="error-login"><?php echo htmlspecialchars("Email ou mot de passe incorrect."); ?></p>
-        <?php endif; ?>
+<div class="auth-page">
+  <div class="auth-content">
 
-        <form method="POST" action="index.php?route=doLogin">
-          <label for="email">Adresse email</label>
-          <input type="email" name="email" id="email" placeholder="Adresse email" required>
+    <div class="auth-left">
+      <h2>Connexion</h2>
+      <?php if (isset($_GET['error']) && $_GET['error'] == 1): ?>
+        <p class="error-login"><?php echo htmlspecialchars("Email ou mot de passe incorrect."); ?></p>
+      <?php endif; ?>
 
-          <label for="password">Mot de passe</label>
-          <input type="password" name="password" id="password" placeholder="Mot de passe" required>
+      <form method="POST" action="index.php?route=doLogin">
+        <label for="email">Adresse email</label>
+        <input type="email" name="email" id="email" placeholder="Adresse email" required>
 
-          <button type="submit">Se connecter</button>
-        </form>
+        <label for="password">Mot de passe</label>
+        <input type="password" name="password" id="password" placeholder="Mot de passe" required>
 
-        <p class="login-link">Pas de compte ? <a href="index.php?route=register">Inscrivez-vous</a></p>
-      </div>
+        <button type="submit">Se connecter</button>
+      </form>
 
-      <div class="auth-right">
-        <img src="assets/images/bookshelf.png" alt="Image bibliothèque">
-      </div>
-
+      <p class="login-link">Pas de compte ? <a href="index.php?route=register">Inscrivez-vous</a></p>
     </div>
+
+    <div class="auth-right">
+      <img src="assets/images/bookshelf.png" alt="Image bibliothèque">
+    </div>
+
   </div>
+</div>
 
 <?php include __DIR__ . '/footer.php'; ?>

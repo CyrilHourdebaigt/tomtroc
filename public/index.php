@@ -2,6 +2,13 @@
 $route = $_GET['route'] ?? '';
 
 switch ($route) {
+
+    case '':
+        require_once __DIR__ . '/../app/controllers/HomeController.php';
+        $controller = new HomeController();
+        $controller->index();
+        break;
+
     case 'register':
         require_once __DIR__ . '/../app/controllers/AuthController.php';
         $controller = new AuthController();
@@ -33,7 +40,7 @@ switch ($route) {
         break;
 
     case 'books':
-         require_once __DIR__ . '/../app/controllers/HomeController.php';
+        require_once __DIR__ . '/../app/controllers/HomeController.php';
         $controller = new HomeController();
         $controller->showBooks();
         break;
@@ -43,29 +50,29 @@ switch ($route) {
         $controller = new HomeController();
         $controller->showBook();
         break;
-        
+
     case 'account':
         require_once __DIR__ . '/../app/controllers/HomeController.php';
         $controller = new HomeController();
         $controller->showAccount();
         break;
-    
+
     case 'uploadAvatar':
         require_once __DIR__ . '/../app/controllers/HomeController.php';
         $controller = new HomeController();
         $controller->uploadAvatar();
         break;
-        
+
     case 'publicAccount':
         require_once __DIR__ . '/../app/controllers/HomeController.php';
         $controller = new HomeController();
         $controller->publicAccount($_GET['id']);
-        break;    
+        break;
 
     case 'editBook':
         require_once __DIR__ . '/../app/views/editBook.php';
         break;
-        
+
     case 'updateBook':
         require_once __DIR__ . '/../app/controllers/HomeController.php';
         $controller = new HomeController();
@@ -77,7 +84,7 @@ switch ($route) {
         $controller = new BookController();
         $controller->deleteBook();
         break;
-    
+
     case 'messages':
         require_once __DIR__ . '/../app/controllers/MessageController.php';
         $controller = new MessageController();
@@ -91,10 +98,9 @@ switch ($route) {
         $controller->sendMessage();
         break;
 
-        
+
     default:
-        require_once __DIR__ . '/../app/controllers/HomeController.php';
-        $controller = new HomeController();
-        $controller->index();
+        http_response_code(404); // envoie le code HTTP 404
+        require_once __DIR__ . '/../app/views/404.php';
         break;
 }

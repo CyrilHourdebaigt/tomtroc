@@ -24,6 +24,13 @@ main {
   flex: 1;
 }
 
+.error-page {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 30px;
+}
+
 .books-page {
     margin: 0 auto;
     padding: 40px 40px;
@@ -105,10 +112,6 @@ header {
     gap: 30px;
 }
   
-.nav-links li {
-    list-style: none;
-}
-  
 .nav-links a {
     text-decoration: none;
     color: #333;
@@ -147,12 +150,24 @@ h1, h2, h3 {
     border-radius: 8px;
     font-size: 14px;
 }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
   
 .search-icon {
     position: absolute;
     left: 12px;
     color: #999;
-} 
+}
 
 .hero {
     background-color: #F5F3EF;
@@ -669,7 +684,6 @@ h1, h2, h3 {
     object-fit: cover;
     border-radius: 50%;
     object-fit: cover;
-    cursor: pointer;
   }
 
   .account-card-left .avatar {
@@ -1583,10 +1597,6 @@ footer a {
     .account-card-left .edit-avatar {
       display: inline-block;
       margin-top: 10px;
-    }
-
-    .edit-avatar-wrapper {
-      margin-bottom: 10px;
     }
      
     .account-books {

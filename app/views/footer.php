@@ -5,6 +5,6 @@
         <p>Tom Troc©</p>
     </div>
     <div class="footer-logo">
-        <img src="/tomtroc/public/assets/images/logo-tomtroc2.png" alt="TomTroc logo" />
+        <img src="/tomtroc/public/assets/images/logo-tomtroc2.png" alt="TomTroc logo">
     </div>
 </footer>

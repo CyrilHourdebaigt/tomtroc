@@ -6,7 +6,7 @@
     <div class="account-card account-card-left">
       <div class="inside-card-left">
         <div class="avatar-wrapper">
-            <img src="<?= isset($user['avatar']) ? $user['avatar'] : 'public/assets/images/avatar-placeholder.png' ?>" alt="Photo de profil" class="avatar-image">
+          <img src="<?= isset($user['avatar']) ? $user['avatar'] : 'public/assets/images/avatar-placeholder.png' ?>" alt="Photo de profil" class="avatar-image">
         </div>
         <h2><?= htmlspecialchars($user['username']) ?></h2>
         <p>Membre depuis 1 an</p>
@@ -42,20 +42,20 @@
       </table>
     </div>
     <div class="account-books-cards">
-        <?php foreach ($books as $book): ?>
-            <div class="book-card">
-                <div class="img-title">
-                    <img src="<?= htmlspecialchars($book['image']) ?>" alt="Photo du livre" class="book-card-img">
-                    <div class="book-card-content">
-                    <h4><?= htmlspecialchars($book['title']) ?></h4>
-                    <p class="author"><?= htmlspecialchars($book['author']) ?></p>
-                    </div>
-                </div>
-                <div class="actions">
-                    <p class="description"><?= htmlspecialchars(mb_strimwidth($book['description'], 0, 150, '...')) ?></p>
-                </div>
+      <?php foreach ($books as $book): ?>
+        <div class="book-card">
+          <div class="img-title">
+            <img src="<?= htmlspecialchars($book['image']) ?>" alt="Photo du livre" class="book-card-img">
+            <div class="book-card-content">
+              <h4><?= htmlspecialchars($book['title']) ?></h4>
+              <p class="author"><?= htmlspecialchars($book['author']) ?></p>
             </div>
-        <?php endforeach; ?>
+          </div>
+          <div class="actions">
+            <p class="description"><?= htmlspecialchars(mb_strimwidth($book['description'], 0, 150, '...')) ?></p>
+          </div>
+        </div>
+      <?php endforeach; ?>
     </div>
   </div>
 </div>

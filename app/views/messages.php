@@ -11,8 +11,8 @@
                         <a href="index.php?route=messages&id=<?= $conv['id'] ?>" class="conversation-link">
                             <img src="<?= htmlspecialchars($conv['avatar']) ?>" alt="avatar" class="avatar-small">
                             <div>
-                            <strong><?= htmlspecialchars($conv['username']) ?></strong><br>
-                            <span><?= htmlspecialchars($conv['last_message']) ?></span>
+                                <strong><?= htmlspecialchars($conv['username']) ?></strong><br>
+                                <span><?= htmlspecialchars($conv['last_message']) ?></span>
                             </div>
                         </a>
                     </li>
@@ -37,8 +37,8 @@
                     <?php foreach ($messages as $message) : ?>
                         <?php $isSent = intval($message['sender_id']) === intval($_SESSION['user_id']); ?>
                         <div class="message-row <?= $isSent ? 'sent' : 'received' ?>">
-                            
-                            <!-- Partie META : avatar + heure -->
+
+                            <!-- Avatar + heure -->
                             <div class="message-meta">
                                 <?php if (!$isSent): ?>
                                     <img src="<?= htmlspecialchars($selectedUser['avatar']) ?>" alt="avatar" class="avatar-small-s">
@@ -58,7 +58,8 @@
                 <!-- Formulaire d'envoi -->
                 <form class="message-form" method="POST" action="index.php?route=sendMessage">
                     <input type="hidden" name="receiver_id" value="<?= $selectedUserId ?>">
-                    <input type="text" name="content" placeholder="Tapez votre message ici" required>
+                    <label for="content" class="sr-only">Votre message</label>
+                    <input type="text" name="content" id="content" placeholder="Tapez votre message ici" required>
                     <button type="submit">Envoyer</button>
                 </form>
             <?php else : ?>
@@ -71,10 +72,10 @@
 <?php include __DIR__ . '/footer.php'; ?>
 
 <script>
-  window.onload = function () {
-    const thread = document.getElementById("message-thread");
-    if (thread) {
-      thread.scrollTop = thread.scrollHeight;
-    }
-  };
+    window.onload = function() {
+        const thread = document.getElementById("message-thread");
+        if (thread) {
+            thread.scrollTop = thread.scrollHeight;
+        }
+    };
 </script>

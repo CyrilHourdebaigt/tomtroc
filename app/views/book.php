@@ -28,8 +28,8 @@ include __DIR__ . '/header.php';
     </div>
 
     <div class="book-content">
-         <div class="book-image">
-                <img src="<?= htmlspecialchars($book['image']) ?>" alt="Couverture du livre">
+        <div class="book-image">
+            <img src="<?= htmlspecialchars($book['image']) ?>" alt="Couverture du livre">
         </div>
 
         <div class="book-details">
