@@ -51,8 +51,10 @@ class MessageController {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $senderId = $_SESSION['user_id'];
             $receiverId = $_POST['receiver_id'];
+            // contenu du message (nettoyé des espaces)
             $content = trim($_POST['content']);
 
+            // Si le message n'est pas vide, on l'enregistre via le modèle
             if (!empty($content)) {
                 $this->messageModel->sendMessage($senderId, $receiverId, $content);
             }

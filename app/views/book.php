@@ -1,25 +1,4 @@
-<?php
-require_once __DIR__ . '/../models/Book.php';
-session_start();
-
-$bookModel = new Book();
-
-if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-    echo "Livre introuvable.";
-    exit;
-}
-
-$bookId = (int) $_GET['id'];
-$book = $bookModel->getById($_GET['id']);
-
-if (!$book) {
-    echo "Livre non trouvé.";
-    exit;
-}
-
-include __DIR__ . '/header.php';
-?>
-
+<?php include __DIR__ . '/header.php'; ?>
 
 <main class="book-page">
     <div class="back-books">
@@ -43,7 +22,7 @@ include __DIR__ . '/header.php';
                 <h4 class="description-title">PROPRIÉTAIRE</h4>
                 <a href="index.php?route=publicAccount&id=<?= $book['user_id'] ?>">
                     <div class="owner-avatar">
-                        <img src="<?= htmlspecialchars($book['avatar'] ?? '/tomtroc/public/assets/images/avatar-placeholder.jpg') ?>" alt="Photo de l'utilisateur">
+                        <img src="<?= htmlspecialchars($book['avatar'] ?? '/public/assets/images/avatar-placeholder.jpg') ?>" alt="Photo de l'utilisateur">
                         <span><?= htmlspecialchars($book['username']) ?></span>
                     </div>
                 </a>

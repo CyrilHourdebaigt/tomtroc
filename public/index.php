@@ -40,14 +40,14 @@ switch ($route) {
         break;
 
     case 'books':
-        require_once __DIR__ . '/../app/controllers/HomeController.php';
-        $controller = new HomeController();
+        require_once __DIR__ . '/../app/controllers/BookController.php';
+        $controller = new BookController();
         $controller->showBooks();
         break;
 
     case 'book':
-        require_once __DIR__ . '/../app/controllers/HomeController.php';
-        $controller = new HomeController();
+        require_once __DIR__ . '/../app/controllers/BookController.php';
+        $controller = new BookController();
         $controller->showBook();
         break;
 
@@ -74,8 +74,8 @@ switch ($route) {
         break;
 
     case 'updateBook':
-        require_once __DIR__ . '/../app/controllers/HomeController.php';
-        $controller = new HomeController();
+        require_once __DIR__ . '/../app/controllers/BookController.php';
+        $controller = new BookController();
         $controller->updateBook();
         break;
 
