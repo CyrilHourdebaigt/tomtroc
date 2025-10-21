@@ -12,6 +12,7 @@ class Book
         $this->pdo = $db->getConnection();
     }
 
+    // Récupère tous les livres avec le username du propriétaire, du plus récent au plus ancien
     public function getAll()
     {
         $stmt = $this->pdo->query("
@@ -23,6 +24,7 @@ class Book
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    // Récupère un livre par son id, avec username + avatar du propriétaire
     public function getById($id)
     {
         $stmt = $this->pdo->prepare("
@@ -35,6 +37,7 @@ class Book
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    // Récupère tous les livres d'un utilisateur donné
     public function getByUserId($userId)
     {
         $stmt = $this->pdo->prepare("
@@ -48,12 +51,14 @@ class Book
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    // Met à jour un livre (titre, auteur, description, image, statut)
     public function update($id, $title, $author, $description, $image, $status)
     {
         $stmt = $this->pdo->prepare("UPDATE books SET title = ?, author = ?, description = ?, image = ?, status = ? WHERE id = ?");
         return $stmt->execute([$title, $author, $description, $image, $status, $id]);
     }
 
+    // Supprime un livre par id
     public function deleteById($id)
     {
         $sql = "DELETE FROM books WHERE id = ?";

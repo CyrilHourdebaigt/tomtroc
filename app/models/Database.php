@@ -2,12 +2,14 @@
 
 class Database
 {
+    // Paramètres de connexion MySQL
     private $host = 'localhost';
     private $dbname = 'tomtroc'; 
     private $username = 'root';
     private $password = '';
     private $pdo;
 
+    // Crée la connexion PDO
     public function __construct()
     {
         try {

@@ -1,18 +1,26 @@
 <?php
 require_once __DIR__ . '/Database.php';
 
-class Message {
+class Message
+{
     private $pdo;
 
-    public function __construct() {
+    // Connexion à la base
+    public function __construct()
+    {
         $db = new Database();
         $this->pdo = $db->getConnection();
     }
 
-    // Récupère les messages entre deux utilisateurs
-    public function getConversation($userId1, $userId2) {
+    // Récupère tous les messages entre deux utilisateurs
+    public function getConversation($userId1, $userId2)
+    {
         $stmt = $this->pdo->prepare("
-            SELECT messages.*, sender.username AS sender_name, receiver.username AS receiver_name, sender.avatar AS sender_avatar, receiver.avatar AS receiver_avatar
+            SELECT messages.*, 
+                sender.username AS sender_name, 
+                receiver.username AS receiver_name, 
+                sender.avatar AS sender_avatar, 
+                receiver.avatar AS receiver_avatar
             FROM messages
             JOIN users AS sender ON messages.sender_id = sender.id
             JOIN users AS receiver ON messages.receiver_id = receiver.id
@@ -27,8 +35,9 @@ class Message {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Récupère les conversations
-    public function getUserConversations($userId) {
+    // Récupère les conversations de l'utilisateur
+    public function getUserConversations($userId)
+    {
         $stmt = $this->pdo->prepare("
             SELECT 
                 u.id,
@@ -47,8 +56,9 @@ class Message {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Récupère les messages non lus
-    public function countUnreadMessages($userId) {
+    // Compte les messages non lus reçus par un utilisateur
+    public function countUnreadMessages($userId)
+    {
         $stmt = $this->pdo->prepare("
             SELECT COUNT(*) 
             FROM messages 
@@ -59,24 +69,24 @@ class Message {
     }
 
     // Changement de status des messages non lus
-    public function markAsRead($userId, $senderId) {
-    $stmt = $this->pdo->prepare("
+    public function markAsRead($userId, $senderId)
+    {
+        $stmt = $this->pdo->prepare("
         UPDATE messages
         SET is_read = 1
         WHERE receiver_id = :userId
           AND sender_id = :senderId
           AND is_read = 0
     ");
-    $stmt->execute([
-        'userId' => $userId,
-        'senderId' => $senderId
-    ]);
-}
-
-
+        $stmt->execute([
+            'userId' => $userId,
+            'senderId' => $senderId
+        ]);
+    }
 
     // Envoie un nouveau message
-    public function sendMessage($senderId, $receiverId, $content) {
+    public function sendMessage($senderId, $receiverId, $content)
+    {
         $stmt = $this->pdo->prepare("
             INSERT INTO messages (sender_id, receiver_id, content, sent_at )
             VALUES (:sender_id, :receiver_id, :content, NOW())
