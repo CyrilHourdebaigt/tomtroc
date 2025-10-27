@@ -1,25 +1,36 @@
 <?php
 
-require_once __DIR__ . '/../models/User.php';
 require_once __DIR__ . '/../models/Book.php';
+require_once __DIR__ . '/../models/Message.php';
+require_once __DIR__ . '/../models/User.php';
+
 
 class HomeController
 {
+    // Méthode privée pour compter les messages non lus
+    private function unreadCount(): int
+    {
+        if (empty($_SESSION['user_id'])) {
+            return 0;
+        }
+
+        $msgModel = new Message();
+        return (int) $msgModel->countUnreadMessages((int)$_SESSION['user_id']);
+    }
+
     public function index()
     {
-
         // On récupère les livres
         $bookModel = new Book();
         $books = $bookModel->getAll();
+
+        $unreadCount = $this->unreadCount();
 
         require_once __DIR__ . '/../views/home.php';
     }
 
     public function showAccount()
     {
-        // On démarre la session pour lire $_SESSION
-        session_start();
-
         // Si pas connecté, redirection vers la page de login
         if (!isset($_SESSION['user_id'])) {
             header('Location: index.php?route=login');
@@ -32,13 +43,13 @@ class HomeController
         $bookModel = new Book();
         $userBooks = $bookModel->getByUserId($userId);
 
+        $unreadCount = $this->unreadCount();
+
         require_once __DIR__ . '/../views/account.php';
     }
 
     public function uploadAvatar()
     {
-        session_start();
-
         if (!isset($_SESSION['user_id'])) {
             header('Location: index.php?route=login');
             exit;
@@ -68,7 +79,6 @@ class HomeController
             if (move_uploaded_file($fileTmpPath, $destination)) {
 
                 // Mise à jour du champ 'avatar' dans la base de données
-                require_once __DIR__ . '/../models/User.php';
                 $userModel = new User();
                 $userModel->updateAvatar($_SESSION['user_id'], $destination);
 
@@ -98,6 +108,8 @@ class HomeController
 
         $user = $userModel->findById($userId);
         $books = $bookModel->getByUserId($userId);
+
+        $unreadCount = $this->unreadCount();
 
         require_once __DIR__ . '/../views/publicAccount.php';
     }

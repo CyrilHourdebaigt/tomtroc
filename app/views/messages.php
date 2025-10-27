@@ -1,4 +1,6 @@
-<?php include __DIR__ . '/header.php'; ?>
+<?php 
+include __DIR__ . '/header.php'; 
+?>
 
 <main class="messagerie-page">
     <div class="messagerie-container">

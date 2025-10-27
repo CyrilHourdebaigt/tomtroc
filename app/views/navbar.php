@@ -1,14 +1,4 @@
-<?php
-require_once __DIR__ . '/../models/Message.php';
-
-$messageModel = new Message();
-$unreadCount = 0;
-
-if (isset($_SESSION['user_id'])) {
-    $unreadCount = $messageModel->countUnreadMessages($_SESSION['user_id']);
-}
-?>
-
+<?php $unreadCount = $unreadCount ?? 0; ?>
 
 <header class="header">
     <nav class="navbar">
@@ -27,7 +17,7 @@ if (isset($_SESSION['user_id'])) {
                 <a href="index.php?route=books">Nos livres à l’échange</a>
             </div>
             <div class="nav-right">
-                <a href="index.php?route=messages" style="<?= $unreadCount > 0 ? 'nav-link-bold' : '' ?>">
+                <a href="index.php?route=messages" class="nav-link<?= $unreadCount > 0 ? ' nav-link-bold' : '' ?>">
                     <img src="/tomtroc/public/assets/images/icons/Icon-messagerie.svg"
                         alt="Messages"
                         width="15"

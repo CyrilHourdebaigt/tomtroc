@@ -1,5 +1,6 @@
-<?php session_start(); ?>
-<?php include __DIR__ . '/header.php'; ?>
+<?php 
+include __DIR__ . '/header.php'; 
+?>
 
 <main class="books-page">
     <div class="container livres-header">

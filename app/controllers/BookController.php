@@ -1,14 +1,27 @@
 <?php
 
 require_once __DIR__ . '/../models/Book.php';
+require_once __DIR__ . '/../models/Message.php';
 
 class BookController
 {
+    // Méthode privée pour compter les messages non lus
+    private function unreadCount(): int
+    {
+        if (empty($_SESSION['user_id'])) {
+            return 0;
+        }
+
+        $msgModel = new Message();
+        return (int) $msgModel->countUnreadMessages((int)$_SESSION['user_id']);
+    }
 
     public function showBooks()
     {
         $bookModel = new Book();
         $books = $bookModel->getAll();
+
+        $unreadCount = $this->unreadCount();
 
         require_once __DIR__ . '/../views/books.php';
     }
@@ -33,8 +46,10 @@ class BookController
             require __DIR__ . '/../views/404.php';
             return;
         }
-        // 4) On renvoi la vue, qui affichera $book
 
+        $unreadCount = $this->unreadCount();
+
+        // 4) On renvoi la vue, qui affichera $book
         require __DIR__ . '/../views/book.php';
     }
 

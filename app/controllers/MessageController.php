@@ -3,19 +3,27 @@
 require_once __DIR__ . '/../models/Message.php';
 require_once __DIR__ . '/../models/User.php';
 
-class MessageController {
+class MessageController
+{
     private $messageModel;
     private $userModel;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->messageModel = new Message();
         $this->userModel = new User();
+    }
+
+    // Compteur de messages non-lus pour la navbar
+    private function unreadCount(): int
+    {
+        if (empty($_SESSION['user_id'])) return 0;
+        return (int) $this->messageModel->countUnreadMessages((int)$_SESSION['user_id']);
     }
 
     // Affiche la page de messagerie entre 2 utilisateurs
     public function showMessages($receiverId)
     {
-        session_start();
         if (!isset($_SESSION['user_id'])) {
             header('Location: index.php?route=login');
             exit;
@@ -36,13 +44,15 @@ class MessageController {
         // Récupère toutes les conversations du user connecté
         $conversations = $this->messageModel->getUserConversations($currentUserId);
 
+        $unreadCount = $this->unreadCount();
+
         require_once __DIR__ . '/../views/messages.php';
     }
 
 
     // Gère l’envoi d’un message
-    public function sendMessage() {
-        session_start();
+    public function sendMessage()
+    {
         if (!isset($_SESSION['user_id'])) {
             header('Location: index.php?route=login');
             exit;
