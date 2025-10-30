@@ -14,7 +14,7 @@ class MessageController
         $this->userModel = new User();
     }
 
-    // Compteur de messages non-lus pour la navbar
+    // Compteur de messages non-lus
     private function unreadCount(): int
     {
         if (empty($_SESSION['user_id'])) return 0;
@@ -58,6 +58,7 @@ class MessageController
             exit;
         }
 
+        // On vérifie que la requête provient bien d’un formulaire envoyé en POST
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $senderId = $_SESSION['user_id'];
             $receiverId = $_POST['receiver_id'];

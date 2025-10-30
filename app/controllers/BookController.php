@@ -8,16 +8,19 @@ class BookController
     // Méthode privée pour compter les messages non lus
     private function unreadCount(): int
     {
+        // Si utilisateur pas connecté, renvoie 0 messages non lus
         if (empty($_SESSION['user_id'])) {
             return 0;
         }
 
+        // Renvoie le nombre total de messages non lus et le convertit en entier
         $msgModel = new Message();
         return (int) $msgModel->countUnreadMessages((int)$_SESSION['user_id']);
     }
 
     public function showBooks()
     {
+        // Récupérer tous les livres
         $bookModel = new Book();
         $books = $bookModel->getAll();
 
