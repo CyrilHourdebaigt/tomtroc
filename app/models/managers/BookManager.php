@@ -3,7 +3,7 @@
 // Le Manager s'occupe UNIQUEMENT des requêtes SQL.
 
 require_once __DIR__ . '/../Database.php';
-require_once __DIR__ . '/../Entity/BookEntity.php';
+require_once __DIR__ . '/../entities/BookEntity.php';
 
 class BookManager
 {
