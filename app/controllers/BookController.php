@@ -1,7 +1,7 @@
 <?php
 
-require_once __DIR__ . '/../models/Book.php';
-require_once __DIR__ . '/../models/Message.php';
+require_once __DIR__ . '/../models/managers/BookManager.php';
+require_once __DIR__ . '/../models/managers/MessageManager.php';
 
 class BookController
 {
@@ -13,16 +13,18 @@ class BookController
             return 0;
         }
 
-        // Renvoie le nombre total de messages non lus et le convertit en entier
-        $msgModel = new Message();
-        return (int) $msgModel->countUnreadMessages((int)$_SESSION['user_id']);
+        // 2) On instancie le MessageManager
+        $msgManager = new MessageManager();
+
+        // 3) On récupère le compteur en base
+        return (int) $msgManager->countUnreadMessages((int)$_SESSION['user_id']);
     }
 
     public function showBooks()
     {
         // Récupérer tous les livres
-        $bookModel = new Book();
-        $books = $bookModel->getAll();
+        $bookManager = new BookManager();
+        $books = $bookManager->getAll();
 
         $unreadCount = $this->unreadCount();
 
@@ -39,9 +41,9 @@ class BookController
             return;
         }
 
-        // Charger le livre depuis la base via le modèle
-        $bookModel = new Book();
-        $book = $bookModel->getById($id);
+        // Charger le livre depuis la base via le manager
+        $bookManager = new BookManager();
+        $book = $bookManager->getById($id);
 
         // Si aucun livre trouvé pour cet id -> 404
         if (!$book) {
@@ -59,7 +61,7 @@ class BookController
     public function updateBook()
     {
         // Nouvel objet pour accéder aux méthodes liées aux livres
-        $bookModel = new Book();
+        $bookManager = new BookManager();
 
         // Récupère les valeurs envoyées par le formulaire en POST
         $id = $_POST['id'];
@@ -69,7 +71,7 @@ class BookController
         $status = $_POST['status'];
 
         // Si une image a été envoyée ET que l’upload s’est bien passé
-        if ($_FILES['image']['error'] === UPLOAD_ERR_OK) {
+        if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
             // Dossier où ranger l’image
             $uploadDir = '/tomtroc/public/assets/images/';
             // Nom de fichier d’origine (sans chemin)
@@ -82,12 +84,20 @@ class BookController
             $image = $uploadFile;
         } else {
             // Pas de nouvelle image envoyée : on récupère le livre actuel et on garde l’ancienne image enregistrée en base
-            $book = $bookModel->getById($id);
-            $image = $book['image'];
+            $book = $bookManager->getById((int)$id);
+            $image = $book['image'] ?? null;
         }
 
         // Met à jour le livre en base avec les nouvelles valeurs
-        $bookModel->update($id, $title, $author, $description, $image, $status);
+        $bookManager->update(
+            (int)$id,
+            $title,
+            $author,
+            $description,
+            $image ?? '',
+            $status
+        );
+
         header("Location: index.php?route=account");
         exit;
     }
@@ -104,8 +114,9 @@ class BookController
         }
 
         // Récupérer le livre
-        $bookModel = new Book();
-        $book = $bookModel->getById($id);
+        $bookManager = new BookManager();
+        $book = $bookManager->getById($id);
+
         if (!$book) {
             http_response_code(404);
             require __DIR__ . '/../views/404.php';
@@ -119,7 +130,8 @@ class BookController
         }
 
         // Supprimer puis rediriger
-        $bookModel->deleteById($id);
+        $bookManager->deleteById($id);
+        
         header('Location: index.php?route=account');
         exit;
     }
