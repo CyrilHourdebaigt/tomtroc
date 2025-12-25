@@ -1,6 +1,10 @@
 <?php 
 include __DIR__ . '/header.php'; 
 ?>
+<?php
+$selectedUserId = $selectedUserId ?? null;
+?>
+
 
 <main class="messagerie-page">
     <div class="messagerie-container">
@@ -9,7 +13,7 @@ include __DIR__ . '/header.php';
             <h2>Messagerie</h2>
             <ul>
                 <?php foreach ($conversations as $conv) : ?>
-                    <li class="<?= $conv['id'] === $selectedUserId ? 'active' : '' ?>">
+                    <li class="<?= ((int)$conv['id'] === (int)$selectedUserId) ? 'active' : '' ?>">
                         <a href="index.php?route=messages&id=<?= $conv['id'] ?>" class="conversation-link">
                             <img src="<?= htmlspecialchars($conv['avatar']) ?>" alt="avatar" class="avatar-small">
                             <div>
@@ -29,7 +33,7 @@ include __DIR__ . '/header.php';
                     ← retour
                 </a>
             </div>
-            <?php if ($selectedUserId && $selectedUser) : ?>
+            <?php if (!empty($selectedUserId) && !empty($selectedUser)) : ?>
                 <div class="message-header">
                     <img src="<?= htmlspecialchars($selectedUser['avatar']) ?>" alt="avatar" class="avatar-small">
                     <strong><?= htmlspecialchars($selectedUser['username']) ?></strong>
