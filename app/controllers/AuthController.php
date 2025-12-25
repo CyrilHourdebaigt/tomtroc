@@ -1,13 +1,13 @@
 <?php
-require_once __DIR__ . '/../models/User.php';
+require_once __DIR__ . '/../models/managers/UserManager.php';
 
 class AuthController {
-    private $userModel;
+    private UserManager $userManager;
 
     public function __construct()
     {
         // On instancie le modèle une fois pour tout le contrôleur
-        $this->userModel = new User();
+        $this->userManager = new UserManager();
     }
 
     // Affiche le formulaire d'inscription
@@ -28,7 +28,7 @@ class AuthController {
             $password = $_POST['password'];
 
             // Vérifie si l'email existe déjà en base
-            $existingUser = $this->userModel->findByEmail($email);
+            $existingUser = $this->userManager->findByEmail($email);
 
             if ($existingUser) {
                 header('Location: index.php?route=register&error=1');
@@ -36,7 +36,7 @@ class AuthController {
             } else {
 
                 // On crée le compte (le modèle hash le mot de passe)
-                $this->userModel->create($username, $email, $password);
+                $this->userManager->create($username, $email, $password);
                 header('Location: index.php?route=login');
                 exit;
             }
@@ -61,7 +61,7 @@ class AuthController {
             $password = $_POST['password'];
 
             // Cherche l'utilisateur par email
-            $user = $this->userModel->findByEmail($email);
+            $user = $this->userManager->findByEmail($email);
 
             // Vérifier que l'utilisateur existe et que le mot de passe correspond au hash
             if ($user && password_verify($password, $user['password'])) {
