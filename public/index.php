@@ -3,74 +3,58 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
 
+// Chargement des contrôleurs
+require_once __DIR__ . '/../app/controllers/HomeController.php';
+require_once __DIR__ . '/../app/controllers/AuthController.php';
+require_once __DIR__ . '/../app/controllers/BookController.php';
+require_once __DIR__ . '/../app/controllers/MessageController.php';
+
 $route = $_GET['route'] ?? '';
 
 switch ($route) {
 
     case '':
-        require_once __DIR__ . '/../app/controllers/HomeController.php';
-        $controller = new HomeController();
-        $controller->index();
+        (new HomeController())->index();
         break;
 
     case 'register':
-        require_once __DIR__ . '/../app/controllers/AuthController.php';
-        $controller = new AuthController();
-        $controller->showRegister();
+        (new AuthController())->showRegister();
         break;
 
     case 'login':
-        require_once __DIR__ . '/../app/controllers/AuthController.php';
-        $controller = new AuthController();
-        $controller->showLogin();
+        (new AuthController())->showLogin();
         break;
 
     case 'doRegister':
-        require_once __DIR__ . '/../app/controllers/AuthController.php';
-        $controller = new AuthController();
-        $controller->register();
+        (new AuthController())->register();
         break;
 
     case 'doLogin':
-        require_once __DIR__ . '/../app/controllers/AuthController.php';
-        $controller = new AuthController();
-        $controller->login();
+        (new AuthController())->login();
         break;
 
     case 'logout':
-        require_once __DIR__ . '/../app/controllers/AuthController.php';
-        $controller = new AuthController();
-        $controller->logout();
+        (new AuthController())->logout();
         break;
 
     case 'books':
-        require_once __DIR__ . '/../app/controllers/BookController.php';
-        $controller = new BookController();
-        $controller->showBooks();
+        (new BookController())->showBooks();
         break;
 
     case 'book':
-        require_once __DIR__ . '/../app/controllers/BookController.php';
-        $controller = new BookController();
-        $controller->showBook();
+        (new BookController())->showBook();
         break;
 
     case 'account':
-        require_once __DIR__ . '/../app/controllers/HomeController.php';
-        $controller = new HomeController();
-        $controller->showAccount();
+        (new HomeController())->showAccount();
         break;
 
     case 'uploadAvatar':
-        require_once __DIR__ . '/../app/controllers/HomeController.php';
-        $controller = new HomeController();
-        $controller->uploadAvatar();
+        (new HomeController())->uploadAvatar();
         break;
 
     case 'publicAccount':
-        require_once __DIR__ . '/../app/controllers/HomeController.php';
-        $controller = new HomeController();
-        $controller->publicAccount($_GET['id']);
+        (new HomeController())->publicAccount($_GET['id'] ?? null);
         break;
 
     case 'editBook':
@@ -78,33 +62,23 @@ switch ($route) {
         break;
 
     case 'updateBook':
-        require_once __DIR__ . '/../app/controllers/BookController.php';
-        $controller = new BookController();
-        $controller->updateBook();
+        (new BookController())->updateBook();
         break;
 
     case 'deleteBook':
-        require_once __DIR__ . '/../app/controllers/BookController.php';
-        $controller = new BookController();
-        $controller->deleteBook();
+        (new BookController())->deleteBook();
         break;
 
     case 'messages':
-        require_once __DIR__ . '/../app/controllers/MessageController.php';
-        $controller = new MessageController();
-        $receiverId = isset($_GET['id']) ? $_GET['id'] : null;
-        $controller->showMessages($receiverId);
+        (new MessageController())->showMessages($_GET['id'] ?? null);
         break;
 
     case 'sendMessage':
-        require_once __DIR__ . '/../app/controllers/MessageController.php';
-        $controller = new MessageController();
-        $controller->sendMessage();
+        (new MessageController())->sendMessage();
         break;
 
-
     default:
-        http_response_code(404); // envoie le code HTTP 404
+        http_response_code(404);
         require_once __DIR__ . '/../app/views/404.php';
         break;
 }
