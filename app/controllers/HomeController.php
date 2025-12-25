@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ . '/../models/Book.php';
-require_once __DIR__ . '/../models/Message.php';
-require_once __DIR__ . '/../models/User.php';
+require_once __DIR__ . '/../models/managers/BookManager.php';
+require_once __DIR__ . '/../models/managers/UserManager.php';
+require_once __DIR__ . '/../models/managers/MessageManager.php';
 
 
 class HomeController
@@ -16,15 +16,17 @@ class HomeController
         }
 
         // Renvoie le nombre total de messages non lus et le convertit en entier
-        $msgModel = new Message();
-        return (int) $msgModel->countUnreadMessages((int)$_SESSION['user_id']);
+        $messageManager = new MessageManager();
+        return (int) $messageManager->countUnreadMessages(
+            (int) $_SESSION['user_id']
+        );
     }
 
     public function index()
     {
         // On récupère les livres
-        $bookModel = new Book();
-        $books = $bookModel->getAll();
+        $bookManager = new BookManager();
+        $books = $bookManager->getAll();
 
         $unreadCount = $this->unreadCount();
 
@@ -42,8 +44,8 @@ class HomeController
         $userId = $_SESSION['user_id'];
 
         // On récupère les livres appartenant à cet utilisateur
-        $bookModel = new Book();
-        $userBooks = $bookModel->getByUserId($userId);
+        $bookManager = new BookManager();
+        $userBooks = $bookManager->getByUserId($userId);
 
         $unreadCount = $this->unreadCount();
 
@@ -81,8 +83,11 @@ class HomeController
             if (move_uploaded_file($fileTmpPath, $destination)) {
 
                 // Mise à jour du champ 'avatar' dans la base de données
-                $userModel = new User();
-                $userModel->updateAvatar($_SESSION['user_id'], $destination);
+                $userManager = new UserManager();
+                $userManager->updateAvatar(
+                    (int) $_SESSION['user_id'],
+                    $destination
+                );
 
                 // On met aussi le chemin en session pour l’affichage immédiat
                 $_SESSION['avatar'] = $destination;
@@ -104,12 +109,13 @@ class HomeController
         // Id du profil public à afficher
         $userId = $_GET['id'];
 
-        // On charge les infos du user + ses livres
-        $userModel = new User();
-        $bookModel = new Book();
+        // Chargement des infos utilisateur
+        $userManager = new UserManager();
+        $user = $userManager->findById($userId);
 
-        $user = $userModel->findById($userId);
-        $books = $bookModel->getByUserId($userId);
+        // Chargement des livres de cet utilisateur
+        $bookManager = new BookManager();
+        $books = $bookManager->getByUserId($userId);
 
         $unreadCount = $this->unreadCount();
 
